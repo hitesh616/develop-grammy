@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="icon" href="/static/images/nad.ico" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('/static/images/widestage.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .button-wrapper {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 20px;
+            font-size: 20px;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+        }
+
+        .visitor-count {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 9999;
+        }
+
+        .count {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .label {
+            font-size: 14px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="/static/images/nad.png" alt="Website Logo">
+        <div class="button-wrapper">
+            <button id="loginBtn" class="button">Log in</button>
+            <br>
+            <button id="registerBtn" class="button">Register</button>
+        </div>
+    </div>
+
+    <div class="visitor-count">
+        <span class="count">{{ visits }}</span>
+        <span class="label">Visitors</span>
+    </div>
+
+    <script>
+        var loginBtn = document.getElementById("loginBtn");
+        var registerBtn = document.getElementById("registerBtn");
+
+        loginBtn.addEventListener("click", function () {
+            // Add your log in logic here
+            window.location.href = "/log_in";
+        });
+
+        registerBtn.addEventListener("click", function () {
+            // Add your registration logic here
+            window.location.href = "/registration";
+        });
+    </script>
+</body>
+</html>

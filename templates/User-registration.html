@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration</title>
+    <link rel="icon" href="/static/images/nad.ico" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('/static/images/widestage.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #registration-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: white;
+            font-size: 48px;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        button[type="submit"],
+        button[type="button"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .popup {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .logo {
+                width: 100px;
+                top: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="/static/images/nad.png" alt="Logo" class="logo">
+
+    <div id="registration-form">
+        <form action="/registration" method="POST" onsubmit="return validateForm()">
+            <h1>Registration</h1>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" required>
+            <br>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" required>
+            <br>
+            <label for="mobile_number">Mobile Number:</label>
+            <input type="text" id="mobile_number" name="mobile_number" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Submit</button>
+            <button type="button" onclick="loginRoute()" id="login-route">Login</button>
+        </form>
+    </div>
+
+    <div id="error-overlay" class="overlay" {% if error_message %}style="visibility: visible; opacity: 1;" {% endif %}>
+        <div class="popup">
+            <h2>Error</h2>
+            <p class="error-message" id="error-message">{{ error_message }}</p>
+            <button onclick="closeErrorPopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openErrorPopup(message) {
+            document.getElementById("error-message").textContent = message;
+            document.getElementById("error-overlay").style.visibility = "visible";
+            document.getElementById("error-overlay").style.opacity = "1";
+        }
+
+        function closeErrorPopup() {
+            document.getElementById("error-overlay").style.visibility = "hidden";
+            document.getElementById("error-overlay").style.opacity = "0";
+        }
+
+        function loginRoute() {
+            window.location.href = "/log_in";
+        }
+
+        function validateForm() {
+            var firstName = document.getElementById("firstname").value;
+            var lastName = document.getElementById("lastname").value;
+            var mobileNumber = document.getElementById("mobile_number").value;
+            var password = document.getElementById("password").value;
+
+            // Check if all fields are not empty
+            if (firstName.trim() !== "" && lastName.trim() !== "" && mobileNumber.trim() !== "" && password.trim() !== "") {
+                closeErrorPopup(); // Clear any previous error message
+            } else {
+                openErrorPopup("All fields are required"); // Display error message
+                return false; // Prevent form submission
+            }
+
+            // Check if the mobile number is exactly 10 digits
+            if (mobileNumber.length === 10) {
+                closeErrorPopup(); // Clear any previous error message
+            } else {
+                openErrorPopup("Mobile number should be 10 digits"); // Display error message
+                return false; // Prevent form submission
+            }
+
+            // Check if the password is at least 6 characters long
+            if (password.length >= 6) {
+                closeErrorPopup(); // Clear any previous error message
+            } else {
+                openErrorPopup("Password should be at least 6 characters long"); // Display error message
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+
+</html>

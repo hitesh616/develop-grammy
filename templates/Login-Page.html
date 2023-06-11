@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="icon" href="/static/images/nad.ico" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('/static/images/widestage.jpg');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #login-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: white;
+            font-size: 48px;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        button[type="submit"],
+        button[type="button"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .popup {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            .logo {
+                width: 80%;
+                max-width: 250px;
+                top: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="/static/images/nad.png" alt="Logo" class="logo">
+
+    <div id="login-form">
+        <form action="/log_in" method="POST" onsubmit="return validateForm()">
+            <h1>Login</h1>
+            <label for="username">Mobile Number:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Sign In</button>
+            <button type="button" onclick="registerRoute()" id="register-route">Register</button>
+        </form>
+    </div>
+
+    <div id="error-overlay" class="overlay" {% if error_message %}style="visibility: visible; opacity: 1;" {% endif %}>
+        <div class="popup">
+            <h2>Error</h2>
+            <p class="error-message" id="error-message">{{ error_message }}</p>
+            <button onclick="closeErrorPopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openErrorPopup(message) {
+            document.getElementById("error-message").textContent = message;
+            document.getElementById("error-overlay").style.visibility = "visible";
+            document.getElementById("error-overlay").style.opacity = "1";
+        }
+
+        function closeErrorPopup() {
+            document.getElementById("error-overlay").style.visibility = "hidden";
+            document.getElementById("error-overlay").style.opacity = "0";
+        }
+
+        function registerRoute() {
+            window.location.href = "/registration";
+        }
+
+        function validateForm() {
+            var mobileNumber = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Check if the mobile number is exactly 10 digits
+            if (mobileNumber.length === 10) {
+                closeErrorPopup(); // Clear any previous error message
+            } else {
+                openErrorPopup("Mobile number should be 10 digits"); // Display error message
+                return false; // Prevent form submission
+            }
+
+            // Check if the password is not empty
+            if (password.trim() !== "") {
+                closeErrorPopup(); // Clear any previous error message
+            } else {
+                openErrorPopup("Password cannot be empty"); // Display error message
+                return false; // Prevent form submission
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Concert Data</title>
+    <link rel="icon" href="/static/images/nad.ico" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        input[type="date"],
+        input[type="time"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            form {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Concert</h1>
+    <form action="/input" method="post" enctype="multipart/form-data">
+        <label for="name">Concert Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="poster">Concert Poster:</label>
+        <input type="file" id="poster" name="poster" accept="image/*" required><br><br>
+
+        <label for="venue">Venue:</label>
+        <input type="text" id="venue" name="venue" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required><br><br>
+
+        <label for="dropdown">Select a event:</label>
+        <select id="dropdown" name="dropdown">
+            <option value="tamasha">तमाशा</option>
+            <option value="orchestra">ऑर्केस्ट्रा</option>
+            <option value="soon">soon</option>
+        </select><br><br>
+
+        <input type="submit" value="Add Concert">
+    </form>
+</body>
+</html>
